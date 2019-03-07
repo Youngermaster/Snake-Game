@@ -1,0 +1,3 @@
+﻿  main.cpp
+LINK : warning LNK4076: archivo de estado incremental 'E:\GIT\Github Projects\Snake Game C++\Debug\Snake Game C++.ilk' no válido (que se eliminará); se vinculará de manera no incremental
+  Snake Game C++.vcxproj -> E:\GIT\Github Projects\Snake Game C++\Debug\Snake Game C++.exe
