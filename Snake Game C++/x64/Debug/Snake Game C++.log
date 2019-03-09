@@ -1,2 +1,3 @@
 ﻿  main.cpp
-  Snake Game C++.vcxproj -> E:\GIT\Github Projects\Snake Game C++\x64\Debug\Snake Game C++.exe
+e:\git\github projects\snake-game\snake game c++\main.cpp(163): warning C4553: "==": el resultado de la expresión no se usa. ¿Quiso decir "="?
+  Snake Game C++.vcxproj -> E:\GIT\Github Projects\Snake-Game\x64\Debug\Snake Game C++.exe

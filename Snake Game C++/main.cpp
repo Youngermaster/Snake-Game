@@ -1,5 +1,6 @@
 #include <iostream>
 #include <conio.h>
+#include <Windows.h>
 #include "functions.h"
 
 using namespace std;
@@ -12,6 +13,9 @@ int y;
 int fruitX;
 int fruitY;
 int score;
+int tailX[100];
+int tailY[100];
+int tailLength;
 
 enum eDirection {
 	STOP = 0,
@@ -55,7 +59,20 @@ void draw()
 			else if (i == fruitY && j == fruitX)
 				cout << "F";
 			else
-				cout << " ";
+			{
+				bool ableToPrint = false;
+				for (int iterator = 0; iterator < tailLength; iterator++)
+				{
+					if (tailX[iterator] == j and tailY[iterator] == i)
+					{
+						cout << "o";
+						ableToPrint = true;
+					}
+				}
+
+				if (!ableToPrint)
+					cout << " ";
+			}
         }
 		cout << endl;
 	}
@@ -94,6 +111,23 @@ void input()
 
 void logic()
 {
+	int previousX = tailX[0];
+	int previousY = tailY[0];
+	int auxPreviousX;
+	int auxPreviousY;
+	tailX[0] = x;
+	tailY[0] = y;
+
+	for (int iterator = 1; iterator < tailLength; iterator++)
+	{
+		auxPreviousX = tailX[iterator];
+		auxPreviousY = tailY[iterator];
+		tailX[iterator] = previousX;
+		tailY[iterator] = previousY;
+		previousX = auxPreviousX;
+		previousY = auxPreviousY;
+	}
+
 	switch (dir)
 	{
 	case LEFT:
@@ -112,13 +146,28 @@ void logic()
 		break;
 	}
 
-	if (x >= width or x <= 0 or y >= heigth or y <= 0)
-		gameOver = true;
+	// ! We can add two game moods.
+
+	// You can crash with the walls.
+	/*
+	* if (x > width or x < 0 or y > heigth or y < 0)
+	*  	 gameOver = true;
+	*/
+	// You can trough the walls.
+	if (x >= width) x = 0; else if (x < 0) x = width - 1;
+	if (y >= width) y = 0; else if (y < 0) y = heigth - 1;
+
+
+	for (int iterator = 0; iterator < tailLength; iterator++)
+		if (tailX[iterator] == x && tailY[iterator] == y)
+			gameOver == true;
+
 
 	if (x == fruitX and y == fruitY)
 	{
 		score++;
 		randomFruit();
+		tailLength++;
 	}
 }
 
@@ -138,7 +187,7 @@ void core()
 		logic();
 		// We gonna sleep the frame for ten seconds.
 		// In Windows: Sleep(10) on Linux: sleep(10).
-
+		Sleep(100);
 	}
 }
 
@@ -147,4 +196,3 @@ int main()
 	core();
 	return 0;
 }
-
